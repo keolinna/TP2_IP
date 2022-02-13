@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Image1</title>
+  <style>
+    #image_display{
+      background-color:rgb(26, 117, 153);
+      border: solid 10px rgba(1,0,0,0.6);
+    }
+    .contain{
+      background-color:rgb(89, 107, 107);
+      width: 520px;
+    }
+  </style>
+
+</head>
+<body>
+
+    <center>
+      <canvas width="500" height="500" id="image_display"></canvas><br>
+      <div class="contain">
+        <span>Upload image here</span><br>
+        <input type="file" id="img" name="img" accept="image/*">
+      </div>
+    </center>
+
+<script>
+
+const img_dis = document.getElementById('image_display');
+const ctx = img_dis.getContext('2d');
+const imgWidth = img_dis.width;
+const imgHeight = img_dis.height;
+
+const image = new Image(imgWidth, imgHeight); // Using optional size for image
+image.onload = drawImageActualSize; // Draw when image has loaded
+
+
+// image.src = "as.jpg"; if we need to used static image
+
+$("#img").change(function () {
+  //create reader for read file
+  var reader  = new FileReader();
+  //create file for query file from input
+  var file = document.querySelector('#img').files[0];
+  //when reader onload we 
+  reader.onloadend = function () {
+    image.src = reader.result;
+  }
+
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    image.src = "";
+  }
+
+});
+//for drawimg
+function drawImageActualSize() {
+  ctx.drawImage(image, 0, 0);
+  ctx.drawImage(image, 0, 0, imgWidth, imgHeight);
+}
+
+  
+  </script>
+</body>
+</html>
